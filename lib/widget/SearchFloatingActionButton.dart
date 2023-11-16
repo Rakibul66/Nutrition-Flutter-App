@@ -1,34 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-import '../controller/NutritionController.dart';
+import '../controller/FoodItemController.dart';
 
-class SearchFloatingActionButton extends StatelessWidget {
-  final NutritionController nutritionController;
-
-  const SearchFloatingActionButton({Key? key, required this.nutritionController})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        showModalBottomSheet<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return SearchBottomSheet(nutritionController: nutritionController);
-          },
-        );
-      },
-      child: Icon(Icons.find_in_page),
-    );
-  }
-}
 
 class SearchBottomSheet extends StatelessWidget {
-  final NutritionController nutritionController;
+  final FoodItemController foodItemController;
 
-  const SearchBottomSheet({Key? key, required this.nutritionController})
+  const SearchBottomSheet({Key? key, required this.foodItemController})
       : super(key: key);
 
   @override
@@ -77,8 +55,8 @@ class SearchBottomSheet extends StatelessWidget {
                   ),
                   onSubmitted: (String value) {
                     if (value.isNotEmpty) {
-                      nutritionController.fetchNutritionData(query: value);
-                      Get.back(); // Close the bottom sheet after submitting the query
+                      foodItemController.fetchNutritionData(query: value);
+                      Navigator.pop(context); // Close the bottom sheet after submitting the query
                     }
                   },
                 ),
@@ -87,7 +65,7 @@ class SearchBottomSheet extends StatelessWidget {
                   onPressed: () {
                     // Perform search operation
                     // Call fetchNutritionData() or any action needed here
-                    Get.back(); // Close the bottom sheet after clicking the search button
+                    Navigator.pop(context); // Close the bottom sheet after clicking the search button
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blueAccent,
